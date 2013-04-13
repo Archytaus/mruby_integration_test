@@ -1,24 +1,51 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/OpenGL.hpp>
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+	// create the window
+	sf::Window window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
+	window.setVerticalSyncEnabled(true);
 
-    while (window.isOpen())
-    {
-        sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+	// load resources, initialize the OpenGL states, ...
+	sf::Clock clock;
 
-        window.clear();
-        window.draw(shape);
-        window.display();
-    }
+	// run the main loop
+	bool running = true;
+	while (running)
+	{
+		// handle events
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+			{
+				// end the program
+				running = false;
+			}
+			else if (event.type == sf::Event::Resized)
+			{
+				// adjust the viewport when the window is resized
+				glViewport(0, 0, event.size.width, event.size.height);
+			}
+		}
 
-    return 0;
+		
+		sf::Time elapsed = clock.restart();
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
+			running = false;
+		}
+		// update every component
+
+		// clear the buffers
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		// draw...
+
+		// end the current frame (internally swaps the front and back buffers)
+		window.display();
+	}
+
+
+	return 0;
 }
