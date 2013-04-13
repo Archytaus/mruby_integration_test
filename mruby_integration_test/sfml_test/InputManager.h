@@ -1,12 +1,20 @@
 #pragma once
 
 #include "IGameComponent.h"
+#include "Game.h"
 
-class InputManager : public IGameComponent
+class InputManager 
+	: public IGameComponent
 {
+protected:
+	Game* game;
+
 public:
-	InputManager(void);
-	~InputManager(void);
+	InputManager(Game* game) 
+		: game(game)
+	{
+
+	}
 
 	virtual void init();
 	virtual void shutdown();

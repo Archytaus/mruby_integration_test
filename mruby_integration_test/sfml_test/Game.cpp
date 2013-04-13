@@ -1,6 +1,7 @@
 #include "Game.h"
 
 #include <SFML/OpenGL.hpp>
+#include "InputManager.h"
 
 Game::Game(void)
 {
@@ -10,6 +11,7 @@ Game::Game(void)
 	clock = new sf::Clock();
 	
 	// load resources, initialize the OpenGL states, ...
+	components.push_back(new InputManager(this));
 }
 
 
@@ -30,8 +32,7 @@ void Game::run()
 		{
 			if (event.type == sf::Event::Closed)
 			{
-				// end the program
-				running = false;
+				shutdown();
 			}
 			else if (event.type == sf::Event::Resized)
 			{
@@ -40,12 +41,13 @@ void Game::run()
 			}
 		}
 
-		
 		sf::Time elapsed = clock->restart();
-		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)){
-			running = false;
-		}
+		
 		// update every component
+		for(IGameComponent* component : components)
+		{
+			component->update(elapsed);
+		}
 
 		// clear the buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -55,4 +57,9 @@ void Game::run()
 		// end the current frame (internally swaps the front and back buffers)
 		window->display();
 	}
+}
+
+void Game::shutdown()
+{
+	running = false;
 }
