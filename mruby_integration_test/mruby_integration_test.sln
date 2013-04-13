@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "include_test", "include_test\include_test.vcxproj", "{27C645CB-21A9-4EF7-9BDE-6FCEDECFEDDD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GL3Framework", "gl_integration\GL3Framework.vcxproj", "{E6D89D73-6238-4531-B235-3C55E29EC24B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sfml_test", "sfml_test\sfml_test.vcxproj", "{F6740A82-E5D6-47A2-94AD-E425F380C3B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,10 +15,10 @@ Global
 		{27C645CB-21A9-4EF7-9BDE-6FCEDECFEDDD}.Debug|Win32.Build.0 = Debug|Win32
 		{27C645CB-21A9-4EF7-9BDE-6FCEDECFEDDD}.Release|Win32.ActiveCfg = Release|Win32
 		{27C645CB-21A9-4EF7-9BDE-6FCEDECFEDDD}.Release|Win32.Build.0 = Release|Win32
-		{E6D89D73-6238-4531-B235-3C55E29EC24B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E6D89D73-6238-4531-B235-3C55E29EC24B}.Debug|Win32.Build.0 = Debug|Win32
-		{E6D89D73-6238-4531-B235-3C55E29EC24B}.Release|Win32.ActiveCfg = Release|Win32
-		{E6D89D73-6238-4531-B235-3C55E29EC24B}.Release|Win32.Build.0 = Release|Win32
+		{F6740A82-E5D6-47A2-94AD-E425F380C3B3}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F6740A82-E5D6-47A2-94AD-E425F380C3B3}.Debug|Win32.Build.0 = Debug|Win32
+		{F6740A82-E5D6-47A2-94AD-E425F380C3B3}.Release|Win32.ActiveCfg = Release|Win32
+		{F6740A82-E5D6-47A2-94AD-E425F380C3B3}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
