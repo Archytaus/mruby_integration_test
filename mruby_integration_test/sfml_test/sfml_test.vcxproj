@@ -85,6 +85,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +95,11 @@
     <None Include="Dependencies\sfml-network-2.dll" />
     <None Include="Dependencies\sfml-system-2.dll" />
     <None Include="Dependencies\sfml-window-2.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="IGameComponent.h" />
+    <ClInclude Include="InputManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
