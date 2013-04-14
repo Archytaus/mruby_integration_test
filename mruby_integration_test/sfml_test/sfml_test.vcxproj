@@ -64,7 +64,8 @@
       <AdditionalDependencies>opengl32.lib;sfml-main.lib;sfml-graphics.lib;sfml-window.lib;sfml-system.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy "$(ProjectDir)Dependencies" "$(TargetDir)" /Y</Command>
+      <Command>xcopy "$(ProjectDir)Dependencies" "$(TargetDir)" /Y &amp; 
+xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,8 +87,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Model.cpp" />
+    <ClCompile Include="RenderManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\sfml-audio-2.dll" />
@@ -98,8 +100,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="IGameComponent.h" />
-    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Model.h" />
+    <ClInclude Include="RenderComponent.h" />
+    <ClInclude Include="RenderManager.h" />
+    <ClInclude Include="WorldPositionComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

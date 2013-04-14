@@ -1,7 +1,6 @@
 #include "Game.h"
 
 #include <SFML/OpenGL.hpp>
-#include "InputManager.h"
 
 Game::Game(void)
 {
@@ -9,9 +8,13 @@ Game::Game(void)
 	window->setVerticalSyncEnabled(true);
 
 	clock = new sf::Clock();
-	
-	// load resources, initialize the OpenGL states, ...
-	components.push_back(new InputManager(this));
+
+	renderManager = new RenderManager();
+	auto model = renderManager->loadModel("Assets/Models/Test.fbx");
+
+	EntityId newEntity = 1;
+	wpSys.components[newEntity] = new WorldPositionComponent(newEntity);
+	rSys.components[newEntity] = new RenderComponent(newEntity, renderManager, model);
 }
 
 
@@ -42,17 +45,22 @@ void Game::run()
 		}
 
 		sf::Time elapsed = clock->restart();
-		
+
 		// update every component
-		for(IGameComponent* component : components)
+		if(sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
-			component->update(elapsed);
+			shutdown();
 		}
 
 		// clear the buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// draw...
+		for(auto keyValue : rSys.components)
+		{
+			keyValue.second->render();
+		}
+		renderManager->finalise();
 
 		// end the current frame (internally swaps the front and back buffers)
 		window->display();

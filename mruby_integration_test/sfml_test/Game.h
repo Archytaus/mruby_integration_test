@@ -2,7 +2,10 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include "IGameComponent.h"
+#include "Component.h"
+#include "WorldPositionComponent.h"
+#include "RenderComponent.h"
+#include "RenderManager.h"
 
 class Game
 {
@@ -10,7 +13,11 @@ protected:
 	sf::Window* window;
 	sf::Clock* clock;
 	bool running;
-	std::vector<IGameComponent*> components;
+
+	System<WorldPositionComponent> wpSys;
+    System<RenderComponent> rSys;
+
+	RenderManager* renderManager;
 
 public:
 	Game(void);
