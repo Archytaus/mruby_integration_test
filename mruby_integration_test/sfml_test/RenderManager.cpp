@@ -13,6 +13,7 @@ RenderManager::~RenderManager(void)
 
 void RenderManager::render(EntityId entity, Model* model)
 {
+	model->render();
 }
 
 void RenderManager::finalise()

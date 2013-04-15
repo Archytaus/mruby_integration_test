@@ -1,11 +1,21 @@
 #include "Game.h"
 
 #include <SFML/OpenGL.hpp>
+#include <glew.h>
 
 Game::Game(void)
 {
 	window = new sf::Window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
 	window->setVerticalSyncEnabled(true);
+
+	GLenum err = glewInit();
+	if (GLEW_OK != err)
+	{
+		/* Problem: glewInit failed, something is seriously wrong. */
+		auto error = glewGetErrorString(err);
+		fprintf(stderr, "Error: %s\n", error);
+	}
+	fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
 
 	clock = new sf::Clock();
 
@@ -15,6 +25,7 @@ Game::Game(void)
 	EntityId newEntity = 1;
 	wpSys.components[newEntity] = new WorldPositionComponent(newEntity);
 	rSys.components[newEntity] = new RenderComponent(newEntity, renderManager, model);
+
 }
 
 
