@@ -17,7 +17,6 @@ public:
 		: Component(id), renderManager(renderManager), model(model) {}
 
 	void load(std::string path){
-		model = new Model(path);
 	}
 
 	void render() {

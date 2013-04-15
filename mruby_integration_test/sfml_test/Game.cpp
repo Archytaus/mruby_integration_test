@@ -10,7 +10,7 @@ Game::Game(void)
 	clock = new sf::Clock();
 
 	renderManager = new RenderManager();
-	auto model = renderManager->loadModel("Assets/Models/Test.fbx");
+	auto model = renderManager->loadModel("Assets/Models/test.dae");
 
 	EntityId newEntity = 1;
 	wpSys.components[newEntity] = new WorldPositionComponent(newEntity);

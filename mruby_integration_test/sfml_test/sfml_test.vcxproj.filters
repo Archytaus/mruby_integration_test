@@ -47,6 +47,7 @@
     <None Include="Dependencies\sfml-audio-2.dll">
       <Filter>Dependencies</Filter>
     </None>
+    <None Include="Dependencies\Assimp32d.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
