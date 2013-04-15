@@ -1,7 +1,7 @@
 #include "Game.h"
 
-#include <SFML/OpenGL.hpp>
 #include <glew.h>
+#include <SFML/OpenGL.hpp>
 
 Game::Game(void)
 {
@@ -20,12 +20,10 @@ Game::Game(void)
 	clock = new sf::Clock();
 
 	renderManager = new RenderManager();
-	auto model = renderManager->loadModel("Assets/Models/test.dae");
+	screenManager = new ScreenManager(this);
 
-	EntityId newEntity = 1;
-	wpSys.components[newEntity] = new WorldPositionComponent(newEntity);
-	rSys.components[newEntity] = new RenderComponent(newEntity, renderManager, model);
-
+	auto renderComponent = renderManager->createRenderComponent(0);
+	renderComponent->load();
 }
 
 
@@ -37,7 +35,7 @@ void Game::run()
 {
 	// run the main loop
 	running = true;
-
+	
 	while (running)
 	{
 		// handle events
@@ -62,16 +60,14 @@ void Game::run()
 		{
 			shutdown();
 		}
+		screenManager->update(elapsed);
 
 		// clear the buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// draw...
-		for(auto keyValue : rSys.components)
-		{
-			keyValue.second->render();
-		}
-		renderManager->finalise();
+		screenManager->render();
+		renderManager->render();
 
 		// end the current frame (internally swaps the front and back buffers)
 		window->display();

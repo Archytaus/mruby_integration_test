@@ -11,24 +11,15 @@ RenderManager::~RenderManager(void)
 {
 }
 
-void RenderManager::render(EntityId entity, Model* model)
+RenderComponent* RenderManager::createRenderComponent(EntityId id)
 {
-	model->render();
+	return renderables.components[id] = new RenderComponent(id, this);
 }
 
-void RenderManager::finalise()
+void RenderManager::render()
 {
-
-}
-
-Model* RenderManager::loadModel(std::string path)
-{
-	const aiScene* node = importer->ReadFile(path, 0);
-	
-	if(!node)
+	for(auto kvp : renderables.components)
 	{
-		return nullptr;
+		kvp.second->render();
 	}
-
-	return new Model(node, path);
 }

@@ -3,17 +3,19 @@
 #include <assimp\Importer.hpp>
 
 #include "Component.h"
-#include "Model.h"
+#include "RenderComponent.h"
 
 class RenderManager
 {
 public:
-	RenderManager();
-	~RenderManager();
+	System<class RenderComponent> renderables;
+
 	Assimp::Importer* importer;
 
-	void render(EntityId entity, Model* model);
-	void finalise();
+	RenderManager();
+	~RenderManager();
+	
+	void render();
 
-	Model* loadModel(std::string path);
+	class RenderComponent* createRenderComponent(EntityId id);
 };

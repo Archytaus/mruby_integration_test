@@ -6,6 +6,7 @@
 #include "WorldPositionComponent.h"
 #include "RenderComponent.h"
 #include "RenderManager.h"
+#include "ScreenManager.h"
 
 class Game
 {
@@ -14,10 +15,8 @@ protected:
 	sf::Clock* clock;
 	bool running;
 
-	System<WorldPositionComponent> wpSys;
-    System<RenderComponent> rSys;
-
 	RenderManager* renderManager;
+	class ScreenManager* screenManager;
 
 public:
 	Game(void);
