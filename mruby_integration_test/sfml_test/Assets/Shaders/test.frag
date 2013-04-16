@@ -1,8 +1,8 @@
 #version 150
-
-out vec4 finalColor;
+uniform sampler2D tex; //this is the texture
+in vec2 fragTexCoord; //this is the texture coord
+out vec4 finalColor; //this is the output color of the pixel
 
 void main() {
-    //set every drawn pixel to white
-    finalColor = vec4(1.0, 1.0, 1.0, 1.0);
+    finalColor = texture(tex, fragTexCoord);
 }
