@@ -114,6 +114,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="ScreenPositionComponent.h" />
     <ClInclude Include="ScreenSpriteComponent.h" />
+    <ClInclude Include="ScriptComponent.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="WorldPositionComponent.h" />

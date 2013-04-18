@@ -26,6 +26,7 @@ Game::Game(void)
 	screenManager = new ScreenManager(this);
 
 	worldPositionComponents.components[0] = new WorldPositionComponent(0);
+	scriptComponents.components[0] = new ScriptComponent(0);
 	auto renderComponent = renderManager->createRenderComponent(0, worldPositionComponents.components[0]);
 	renderComponent->load();
 }
@@ -39,7 +40,7 @@ void Game::run()
 {
 	// run the main loop
 	running = true;
-	
+
 	while (running)
 	{
 		// handle events
@@ -65,6 +66,10 @@ void Game::run()
 			shutdown();
 		}
 		screenManager->update(elapsed);
+		for(auto kvp : scriptComponents.components)
+		{
+			kvp.second->onUpdate(elapsed);
+		}
 
 		// clear the buffers
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
