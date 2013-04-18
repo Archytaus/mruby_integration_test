@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <glm/gtc/matrix_transform.hpp>
+
 #include "Component.h"
 #include "WorldPositionComponent.h"
 #include "RenderManager.h"
@@ -16,13 +18,14 @@ public:
 	Texture* diffuse;
 
 	GLuint vao, vbo;
+	GLfloat rotation;
 
 	RenderComponent(EntityId id, class RenderManager* renderManager)
-		: Component(id), renderManager(renderManager) {}
+		: Component(id), renderManager(renderManager), rotation(0.0f) {}
 
 	void load(){
 		diffuse = new Texture();
-		diffuse->load("Assets/Textures/hazard.png");
+		diffuse->load("Assets/Textures/texture.jpg");
 
 		shader = new ShaderProgram();
 		shader->attachFromFile(GL_VERTEX_SHADER, "Assets\\Shaders\\test.vert");
@@ -40,10 +43,55 @@ public:
 		// Put the three triangle verticies into the VBO
 		GLfloat vertexData[] = {
 			//  X     Y     Z       U     V
-			0.0f, 0.8f, 0.0f,   0.5f, 0.0f,
-			-0.8f,-0.8f, 0.0f,   0.0f, 1.0f,
-			0.8f,-0.8f, 0.0f,   1.0f, 1.0f,
+			// bottom
+			-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,
+			1.0f,-1.0f,-1.0f,   1.0f, 0.0f,
+			-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,
+			1.0f,-1.0f,-1.0f,   1.0f, 0.0f,
+			1.0f,-1.0f, 1.0f,   1.0f, 1.0f,
+			-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,
+
+			// top
+			-1.0f, 1.0f,-1.0f,   0.0f, 0.0f,
+			-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,
+			1.0f, 1.0f,-1.0f,   1.0f, 0.0f,
+			1.0f, 1.0f,-1.0f,   1.0f, 0.0f,
+			-1.0f, 1.0f, 1.0f,   0.0f, 1.0f,
+			1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
+
+			// front
+			-1.0f,-1.0f, 1.0f,   1.0f, 0.0f,
+			1.0f,-1.0f, 1.0f,   0.0f, 0.0f,
+			-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
+			1.0f,-1.0f, 1.0f,   0.0f, 0.0f,
+			1.0f, 1.0f, 1.0f,   0.0f, 1.0f,
+			-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
+
+			// back
+			-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,
+			-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,
+			1.0f,-1.0f,-1.0f,   1.0f, 0.0f,
+			1.0f,-1.0f,-1.0f,   1.0f, 0.0f,
+			-1.0f, 1.0f,-1.0f,   0.0f, 1.0f,
+			1.0f, 1.0f,-1.0f,   1.0f, 1.0f,
+
+			// left
+			-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,
+			-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,
+			-1.0f,-1.0f,-1.0f,   0.0f, 0.0f,
+			-1.0f,-1.0f, 1.0f,   0.0f, 1.0f,
+			-1.0f, 1.0f, 1.0f,   1.0f, 1.0f,
+			-1.0f, 1.0f,-1.0f,   1.0f, 0.0f,
+
+			// right
+			1.0f,-1.0f, 1.0f,   1.0f, 1.0f,
+			1.0f,-1.0f,-1.0f,   1.0f, 0.0f,
+			1.0f, 1.0f,-1.0f,   0.0f, 0.0f,
+			1.0f,-1.0f, 1.0f,   1.0f, 1.0f,
+			1.0f, 1.0f,-1.0f,   0.0f, 0.0f,
+			1.0f, 1.0f, 1.0f,   0.0f, 1.0f
 		};
+
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
 		// connect the xyz to the "vert" attribute of the vertex shader
@@ -63,6 +111,18 @@ public:
 	{
 		// bind the program (the shaders)
 		shader->use();
+		
+		glm::mat4 camera = glm::lookAt(glm::vec3(3,3,3), glm::vec3(0,0,0), glm::vec3(0,1,0));
+		shader->bind_uniform("camera", camera);
+	
+		glm::mat4 projection = glm::perspective<float>(50.0, 800.0f/600.0f, 0.1, 10.0);
+		shader->bind_uniform("projection", projection);
+		
+		rotation += 1.0f;
+		while(rotation > 360.0f) rotation -= 360.0f;
+
+		shader->bind_uniform("model", glm::rotate(glm::mat4(), rotation, glm::vec3(0,1,0)));
+
 		glActiveTexture(GL_TEXTURE0);
 		diffuse->bind();
 		shader->bind_uniform("tex", 0);
@@ -71,7 +131,7 @@ public:
 		glBindVertexArray(vao);
 
 		// draw the VAO
-		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glDrawArrays(GL_TRIANGLES, 0, 6*2*3);
 
 		// unbind the VAO
 		glBindVertexArray(0);

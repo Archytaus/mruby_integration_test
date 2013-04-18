@@ -17,6 +17,9 @@ Game::Game(void)
 	}
 	fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
 
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+
 	clock = new sf::Clock();
 
 	renderManager = new RenderManager();
