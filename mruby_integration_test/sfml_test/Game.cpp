@@ -25,7 +25,8 @@ Game::Game(void)
 	renderManager = new RenderManager();
 	screenManager = new ScreenManager(this);
 
-	auto renderComponent = renderManager->createRenderComponent(0);
+	worldPositionComponents.components[0] = new WorldPositionComponent(0);
+	auto renderComponent = renderManager->createRenderComponent(0, worldPositionComponents.components[0]);
 	renderComponent->load();
 }
 

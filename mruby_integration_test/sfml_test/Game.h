@@ -17,6 +17,7 @@ protected:
 
 	RenderManager* renderManager;
 	class ScreenManager* screenManager;
+	System<WorldPositionComponent> worldPositionComponents;
 
 public:
 	Game(void);

@@ -4,6 +4,7 @@
 
 #include "Component.h"
 #include "RenderComponent.h"
+#include "WorldPositionComponent.h"
 
 class RenderManager
 {
@@ -17,5 +18,5 @@ public:
 	
 	void render();
 
-	class RenderComponent* createRenderComponent(EntityId id);
+	class RenderComponent* createRenderComponent(EntityId id, class WorldPositionComponent* worldPositionComponent);
 };

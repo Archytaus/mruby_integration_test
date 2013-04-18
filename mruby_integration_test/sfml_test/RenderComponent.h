@@ -8,20 +8,23 @@
 #include "RenderManager.h"
 #include "ShaderProgram.h"
 #include "Texture.h"
+#include "WorldPositionComponent.h"
 
 class RenderComponent
 	: public Component
 {
 public:
+	class WorldPositionComponent* worldPositionComponent;
 	class RenderManager* renderManager;
 	ShaderProgram* shader;
 	Texture* diffuse;
 
 	GLuint vao, vbo;
-	GLfloat rotation;
 
-	RenderComponent(EntityId id, class RenderManager* renderManager)
-		: Component(id), renderManager(renderManager), rotation(0.0f) {}
+	RenderComponent(EntityId id, class RenderManager* renderManager, class WorldPositionComponent* worldPositionComponent)
+		: Component(id), renderManager(renderManager), worldPositionComponent(worldPositionComponent) 
+	{
+	}
 
 	void load(){
 		diffuse = new Texture();
@@ -118,10 +121,7 @@ public:
 		glm::mat4 projection = glm::perspective<float>(50.0, 800.0f/600.0f, 0.1, 10.0);
 		shader->bind_uniform("projection", projection);
 		
-		rotation += 1.0f;
-		while(rotation > 360.0f) rotation -= 360.0f;
-
-		shader->bind_uniform("model", glm::rotate(glm::mat4(), rotation, glm::vec3(0,1,0)));
+		shader->bind_uniform("model", worldPositionComponent->world());
 
 		glActiveTexture(GL_TEXTURE0);
 		diffuse->bind();
