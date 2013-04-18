@@ -7,7 +7,7 @@
 #include "RenderComponent.h"
 #include "RenderManager.h"
 #include "ScreenManager.h"
-#include "ScriptComponent.h"
+#include "ScriptManager.h"
 
 class Game
 {
@@ -18,8 +18,9 @@ protected:
 
 	RenderManager* renderManager;
 	class ScreenManager* screenManager;
+	class ScriptManager* scriptManager;
+
 	System<WorldPositionComponent> worldPositionComponents;
-	System<ScriptComponent> scriptComponents;
 
 public:
 	Game(void);

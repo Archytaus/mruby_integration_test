@@ -6,7 +6,6 @@ RenderManager::RenderManager(void)
 	importer = new Assimp::Importer();
 }
 
-
 RenderManager::~RenderManager(void)
 {
 }

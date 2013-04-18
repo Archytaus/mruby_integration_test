@@ -42,7 +42,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\SFML2\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\SFML2\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>D:\Repositories\mruby\build\host\lib;C:\SFML2\lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>D:\Repositories\mruby_integration_test\mruby_integration_test\sfml_test\Dependencies;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -57,12 +57,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\glm-0.9.4.3;C:\glew-1.9.0\include\GL;C:\Program Files\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>D:\Repositories\mruby\include;C:\glm-0.9.4.3;C:\glew-1.9.0\include\GL;C:\Program Files\Assimp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>assimp.lib;opengl32.lib;glew32.lib;sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libmruby.lib;assimp.lib;opengl32.lib;glew32.lib;sfml-main-d.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\glew-1.9.0\lib;C:\Program Files\Assimp\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>msvcrt;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -94,6 +94,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="ScriptManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
@@ -115,6 +116,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClInclude Include="ScreenPositionComponent.h" />
     <ClInclude Include="ScreenSpriteComponent.h" />
     <ClInclude Include="ScriptComponent.h" />
+    <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="WorldPositionComponent.h" />

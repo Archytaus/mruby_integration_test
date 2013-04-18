@@ -42,6 +42,9 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ScriptManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\sfml-window-2.dll">
@@ -98,6 +101,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ScriptComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
