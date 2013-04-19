@@ -8,6 +8,7 @@
 #include "RenderManager.h"
 #include "ScreenManager.h"
 #include "ScriptManager.h"
+#include "Camera.h"
 
 class Game
 {
@@ -16,7 +17,7 @@ protected:
 	sf::Clock* clock;
 	bool running;
 
-	RenderManager* renderManager;
+	class RenderManager* renderManager;
 	class ScreenManager* screenManager;
 	class ScriptManager* scriptManager;
 

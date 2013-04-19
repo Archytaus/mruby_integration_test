@@ -88,15 +88,10 @@ void RenderComponent::render()
 {
 	// bind the program (the shaders)
 	shader->use();
-
-	glm::mat4 camera = glm::lookAt(glm::vec3(3,3,3), glm::vec3(0,0,0), glm::vec3(0,1,0));
-	shader->bind_uniform("camera", camera);
-
-	glm::mat4 projection = glm::perspective<float>(50.0, 800.0f/600.0f, 0.1, 10.0);
-	shader->bind_uniform("projection", projection);
-
+	
+	shader->bind_uniform("camera", renderManager->camera->matrix());
 	shader->bind_uniform("model", worldPositionComponent->world());
-
+	
 	glActiveTexture(GL_TEXTURE0);
 	diffuse->bind();
 	shader->bind_uniform("tex", 0);

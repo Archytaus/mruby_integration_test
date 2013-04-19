@@ -89,6 +89,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -111,6 +112,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <None Include="Dependencies\sfml-window-2.dll" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Component.h" />

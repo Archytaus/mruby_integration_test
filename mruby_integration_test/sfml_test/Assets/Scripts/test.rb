@@ -1,5 +1,5 @@
 class Test
-  DEGREES_PER_SECOND = 180
+  DEGREES_PER_SECOND = 90
   
   def onCreate
     puts "My ID: #{@id.to_s}"

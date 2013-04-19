@@ -22,8 +22,8 @@ Game::Game(void)
 	glDepthFunc(GL_LESS);
 
 	clock = new sf::Clock();
-
-	renderManager = new RenderManager();
+	
+	renderManager = new RenderManager(this);
 	screenManager = new ScreenManager(this);
 	scriptManager = new ScriptManager();
 
