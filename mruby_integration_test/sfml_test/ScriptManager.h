@@ -22,6 +22,6 @@ public:
 
 	void update(sf::Time elapsed);
 	
-	class ScriptComponent* createScriptComponent(EntityId id, class WorldPositionComponent* worldPositionComponent, std::string className);
+	class ScriptComponent* createScriptComponent(EntityId id, class TransformComponent* transformComponent, std::string className);
 };
 

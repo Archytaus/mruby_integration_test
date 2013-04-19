@@ -3,13 +3,13 @@
 #include "Component.h"
 #include <glm/gtc/matrix_transform.hpp>
 
-class WorldPositionComponent 
+class TransformComponent 
 	: public Component
 {
 public:
 	glm::vec3 position, rotation, scale;
 
-    WorldPositionComponent(EntityId id) 
+    TransformComponent(EntityId id) 
 		: Component(id), scale(1.0f)
 	{}
 

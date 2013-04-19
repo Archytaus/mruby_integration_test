@@ -127,7 +127,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Texture.h" />
-    <ClInclude Include="WorldPositionComponent.h" />
+    <ClInclude Include="TransformComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

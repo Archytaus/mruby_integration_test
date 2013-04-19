@@ -40,7 +40,7 @@ void ScriptManager::update(sf::Time elapsed)
 	}
 }
 
-ScriptComponent* ScriptManager::createScriptComponent(EntityId id, class WorldPositionComponent* worldPositionComponent, std::string scriptClass)
+ScriptComponent* ScriptManager::createScriptComponent(EntityId id, class TransformComponent* transformComponent, std::string scriptClass)
 {
-	return scriptComponents.components[id] = new ScriptComponent(id, worldPositionComponent, scriptClass, mrb);
+	return scriptComponents.components[id] = new ScriptComponent(id, transformComponent, scriptClass, mrb);
 }

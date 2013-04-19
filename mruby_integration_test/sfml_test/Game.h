@@ -3,7 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 #include "Component.h"
-#include "WorldPositionComponent.h"
+#include "TransformComponent.h"
 #include "RenderComponent.h"
 #include "RenderManager.h"
 #include "ScreenManager.h"
@@ -21,7 +21,7 @@ protected:
 	class ScreenManager* screenManager;
 	class ScriptManager* scriptManager;
 
-	System<WorldPositionComponent> worldPositionComponents;
+	System<TransformComponent> transformComponents;
 
 public:
 	Game(void);

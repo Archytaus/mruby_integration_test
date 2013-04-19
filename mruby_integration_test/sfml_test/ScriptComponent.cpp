@@ -1,15 +1,15 @@
 #include "ScriptComponent.h"
 
-ScriptComponent::ScriptComponent(EntityId id, class WorldPositionComponent* worldPositionComponent, std::string scriptClass, mrb_state* mrb) 
+ScriptComponent::ScriptComponent(EntityId id, class TransformComponent* transformComponent, std::string scriptClass, mrb_state* mrb) 
 	: Component(id), mrb(mrb)
 {
 	_scriptInstance = mrb_class_new_instance(mrb, 0, ARGS_NONE(), mrb_class_get(mrb, scriptClass.c_str()));
 	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@id"), mrb_fixnum_value(id)); 
 
 	auto vec3Class = mrb_class_get(mrb, "Vec3");
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@position"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&worldPositionComponent->position)));
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@rotation"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&worldPositionComponent->rotation)));
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@scale"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&worldPositionComponent->scale)));
+	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@position"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&transformComponent->position)));
+	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@rotation"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&transformComponent->rotation)));
+	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@scale"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&transformComponent->scale)));
 
 	onCreate();
 }

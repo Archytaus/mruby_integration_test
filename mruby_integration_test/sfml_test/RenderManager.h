@@ -4,7 +4,7 @@
 
 #include "Component.h"
 #include "RenderComponent.h"
-#include "WorldPositionComponent.h"
+#include "TransformComponent.h"
 #include "Game.h"
 #include "Camera.h"
 
@@ -23,5 +23,5 @@ public:
 	
 	void render();
 
-	class RenderComponent* createRenderComponent(EntityId id, class WorldPositionComponent* worldPositionComponent);
+	class RenderComponent* createRenderComponent(EntityId id, class TransformComponent* transformComponent);
 };

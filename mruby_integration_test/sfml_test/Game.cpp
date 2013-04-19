@@ -28,9 +28,9 @@ Game::Game(void)
 	scriptManager = new ScriptManager();
 
 	auto entity = new Entity(0);
-	auto positionComponent = worldPositionComponents.components[0] = new WorldPositionComponent(0);
+	auto positionComponent = transformComponents.components[0] = new TransformComponent(0);
 
-	entity->addComponent(worldPositionComponents.components[0]);
+	entity->addComponent(transformComponents.components[0]);
 	entity->addComponent(scriptManager->createScriptComponent(0, positionComponent, "Test"));
 
 	auto renderComponent = renderManager->createRenderComponent(0, positionComponent);

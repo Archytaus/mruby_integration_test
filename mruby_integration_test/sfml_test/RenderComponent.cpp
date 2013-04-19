@@ -90,7 +90,7 @@ void RenderComponent::render()
 	shader->use();
 	
 	shader->bind_uniform("camera", renderManager->camera->matrix());
-	shader->bind_uniform("model", worldPositionComponent->world());
+	shader->bind_uniform("model", transformComponent->world());
 	
 	glActiveTexture(GL_TEXTURE0);
 	diffuse->bind();

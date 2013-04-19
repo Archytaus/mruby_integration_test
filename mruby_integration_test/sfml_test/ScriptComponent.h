@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include "WorldPositionComponent.h"
+#include "TransformComponent.h"
 
 #include <mruby.h>
 #include <mruby/proc.h>
@@ -17,7 +17,7 @@ protected:
 	mrb_value _scriptInstance;
 
 public:
-	ScriptComponent(EntityId id, class WorldPositionComponent* worldPositionComponent, 
+	ScriptComponent(EntityId id, class TransformComponent* transformComponent, 
 		std::string scriptClass, mrb_state* mrb);
 	~ScriptComponent();
 	

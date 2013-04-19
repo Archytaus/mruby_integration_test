@@ -15,9 +15,9 @@ RenderManager::~RenderManager(void)
 {
 }
 
-RenderComponent* RenderManager::createRenderComponent(EntityId id, class WorldPositionComponent* worldPositionComponent)
+RenderComponent* RenderManager::createRenderComponent(EntityId id, class TransformComponent* transformComponent)
 {
-	return renderables.components[id] = new RenderComponent(id, this, worldPositionComponent);
+	return renderables.components[id] = new RenderComponent(id, this, transformComponent);
 }
 
 void RenderManager::render()
