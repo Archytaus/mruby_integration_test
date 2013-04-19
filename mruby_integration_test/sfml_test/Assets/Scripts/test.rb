@@ -7,7 +7,7 @@ class Test
   end
   
   def update(elapsed)
-    @rotation.y += elapsed * DEGREES_PER_SECOND
-    @rotation.y -= 360 while @rotation.y > 360
+    @transform.rotation.y += elapsed * DEGREES_PER_SECOND
+    @transform.rotation.y -= 360 while @transform.rotation.y > 360
   end
 end

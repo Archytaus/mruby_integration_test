@@ -16,6 +16,7 @@ ScriptManager::ScriptManager(void)
 	mrb = mrb_open();
 	
 	init_mrb_vec3(mrb);
+	init_mrb_transform(mrb);
 
 	FILE* pFile;
 

@@ -6,11 +6,8 @@ ScriptComponent::ScriptComponent(EntityId id, class TransformComponent* transfor
 	_scriptInstance = mrb_class_new_instance(mrb, 0, ARGS_NONE(), mrb_class_get(mrb, scriptClass.c_str()));
 	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@id"), mrb_fixnum_value(id)); 
 
-	auto vec3Class = mrb_class_get(mrb, "Vec3");
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@position"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&transformComponent->position)));
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@rotation"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&transformComponent->rotation)));
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@scale"), mrb_vec3_wrap(mrb, vec3Class, new mrb_vec3(&transformComponent->scale)));
-
+	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@transform"), transformComponent->init_mrb_variables(mrb)); 
+	
 	onCreate();
 }
 
