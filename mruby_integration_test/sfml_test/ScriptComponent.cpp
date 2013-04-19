@@ -20,23 +20,47 @@ ScriptComponent::~ScriptComponent()
 }
 
 void ScriptComponent::onCreate()
-{
-	mrb_funcall(mrb, _scriptInstance, "onCreate", 0);
+{	
+	int ai = mrb_gc_arena_save(mrb);
+
+	if(mrb_respond_to(mrb, _scriptInstance, mrb_intern_cstr(mrb, "onCreate")) == TRUE)
+	{
+		mrb_funcall(mrb, _scriptInstance, "onCreate", 0);
+		if(mrb->exc)
+		{
+			mrb_p(mrb, mrb_obj_value(mrb->exc));
+		}
+	}
+	mrb_gc_arena_restore(mrb, ai);
 }
 
 void ScriptComponent::onDestroy()
 {
-	mrb_funcall(mrb, _scriptInstance, "onDestroy", 0);
+	int ai = mrb_gc_arena_save(mrb);
+
+	if(mrb_respond_to(mrb, _scriptInstance, mrb_intern_cstr(mrb, "onDestroy")) == TRUE)
+	{
+		mrb_funcall(mrb, _scriptInstance, "onDestroy", 0);
+		if(mrb->exc)
+		{
+			mrb_p(mrb, mrb_obj_value(mrb->exc));
+		}
+	}
+
+	mrb_gc_arena_restore(mrb, ai);
 }
 
 void ScriptComponent::onUpdate(sf::Time elapsed)
 {
 	int ai = mrb_gc_arena_save(mrb);
 
-	mrb_funcall(mrb, _scriptInstance, "update", 1, mrb_float_value(elapsed.asSeconds()));
-	if(mrb->exc)
+	if(mrb_respond_to(mrb, _scriptInstance, mrb_intern_cstr(mrb, "update")) == TRUE)
 	{
-		mrb_p(mrb, mrb_obj_value(mrb->exc));
+		mrb_funcall(mrb, _scriptInstance, "update", 1, mrb_float_value(elapsed.asSeconds()));
+		if(mrb->exc)
+		{
+			mrb_p(mrb, mrb_obj_value(mrb->exc));
+		}
 	}
 
 	mrb_gc_arena_restore(mrb, ai);
