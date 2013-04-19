@@ -21,6 +21,7 @@ public:
 	}
 };
 
+void init_mrb_vec3(mrb_state* mrb);
 void mrb_vec3_free(mrb_state *mrb, void *p);
 mrb_value mrb_vec3_wrap(mrb_state *mrb, struct RClass *tc, struct mrb_vec3 *tm);
 

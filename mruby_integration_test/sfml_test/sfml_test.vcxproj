@@ -93,9 +93,11 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mrb_vec3.cpp" />
+    <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="RenderManager.cpp" />
     <ClCompile Include="Screen.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
+    <ClCompile Include="ScriptComponent.cpp" />
     <ClCompile Include="ScriptManager.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Texture.cpp" />
