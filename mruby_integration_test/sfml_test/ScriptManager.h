@@ -5,6 +5,8 @@
 
 #include <mruby.h>
 #include <mruby\compile.h>
+#include <mruby\class.h>
+#include <mruby\variable.h>
 
 class ScriptManager
 {
@@ -20,6 +22,6 @@ public:
 
 	void update(sf::Time elapsed);
 	
-	class ScriptComponent* createScriptComponent(EntityId id, std::string className);
+	class ScriptComponent* createScriptComponent(EntityId id, class WorldPositionComponent* worldPositionComponent, std::string className);
 };
 

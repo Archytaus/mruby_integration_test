@@ -6,7 +6,6 @@ Screen::Screen(EntityId id)
 {
 }
 
-
 Screen::~Screen(void)
 {
 }

@@ -2,6 +2,7 @@
 
 #include <glew.h>
 #include <SFML/OpenGL.hpp>
+#include "Entity.h"
 
 Game::Game(void)
 {
@@ -26,9 +27,14 @@ Game::Game(void)
 	screenManager = new ScreenManager(this);
 	scriptManager = new ScriptManager();
 
-	worldPositionComponents.components[0] = new WorldPositionComponent(0);
-	scriptManager->createScriptComponent(0, "Test");
-	auto renderComponent = renderManager->createRenderComponent(0, worldPositionComponents.components[0]);
+	auto entity = new Entity(0);
+	auto positionComponent = worldPositionComponents.components[0] = new WorldPositionComponent(0);
+
+	entity->addComponent(worldPositionComponents.components[0]);
+	entity->addComponent(scriptManager->createScriptComponent(0, positionComponent, "Test"));
+
+	auto renderComponent = renderManager->createRenderComponent(0, positionComponent);
+	entity->addComponent(renderComponent);
 	renderComponent->load();
 }
 
