@@ -9,9 +9,11 @@
 struct mrb_vec3
 {
 	glm::vec3* vector;	
+	glm::vec3 value;
+
 public:
 	mrb_vec3()
-		:vector(nullptr)
+		:vector(nullptr), value(0.0f)
 	{
 	}
 
@@ -19,11 +21,18 @@ public:
 		:vector(vec)
 	{
 	}
+
+	mrb_vec3(glm::vec3 vec)
+		:value(vec), vector(&value)
+	{
+	}
 };
 
-void init_mrb_vec3(mrb_state* mrb);
 void mrb_vec3_free(mrb_state *mrb, void *p);
+
+void init_mrb_vec3(mrb_state* mrb);
 mrb_value mrb_vec3_wrap(mrb_state *mrb, struct RClass *tc, struct mrb_vec3 *tm);
+mrb_vec3* mrb_vec3_get_ptr(mrb_state* mrb, mrb_value value);
 
 mrb_value mrb_vec3_get_x(mrb_state* mrb, mrb_value self);
 mrb_value mrb_vec3_set_x(mrb_state* mrb, mrb_value self);

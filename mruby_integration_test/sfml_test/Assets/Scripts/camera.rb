@@ -2,7 +2,7 @@ class Camera
   MOVE_SPEED = 2
   
   def onCreate
-    @position = Vec3.new(0, 0, 4)
+    Scene.camera.position = Vec3.new(0, 0, 4)
   end
   
   def update(elapsed)
