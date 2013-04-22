@@ -91,6 +91,35 @@ mrb_value mrb_vec3_plus(mrb_state* mrb, mrb_value self)
 		selfValue->vector->z + arg->vector->z)));
 }
 
+mrb_value mrb_vec3_times(mrb_state* mrb, mrb_value self)
+{
+	mrb_vec3* selfValue = (struct mrb_vec3*)mrb_data_get_ptr(mrb, self, &mrb_vec3_type);
+
+	mrb_value new_value;
+	mrb_get_args(mrb, "o", &new_value);
+	mrb_vec3* arg =(struct mrb_vec3*)mrb_data_get_ptr(mrb, new_value, &mrb_vec3_type);
+
+	if (arg)
+	{
+		return mrb_vec3_wrap(mrb, mrb_class_get(mrb, "Vec3"), new mrb_vec3(
+			glm::vec3(selfValue->vector->x * arg->vector->x, 
+			selfValue->vector->y * arg->vector->y,
+			selfValue->vector->z * arg->vector->z)));
+	}
+
+	mrb_float modifier;
+	mrb_get_args(mrb, "f", &modifier);
+	if(modifier)
+	{
+		return mrb_vec3_wrap(mrb, mrb_class_get(mrb, "Vec3"), new mrb_vec3(
+			glm::vec3(selfValue->vector->x * modifier, 
+			selfValue->vector->y * modifier,
+			selfValue->vector->z * modifier)));
+	}
+
+	return mrb_nil_value();
+}
+
 mrb_value mrb_vec3_initialize(mrb_state *mrb, mrb_value self)
 {
 	mrb_float x, y, z;
@@ -103,8 +132,8 @@ mrb_value mrb_vec3_initialize(mrb_state *mrb, mrb_value self)
 	}
 	DATA_TYPE(self) = &mrb_vec3_type;
 	DATA_PTR(self) = NULL;
-
-	n = mrb_get_args(mrb, "fff", &x, &y, &z);
+	
+	n = mrb_get_args(mrb, "f|ff", &x, &y, &z); // 1 or 3 float arguments
 	tm = (struct mrb_vec3 *)mrb_malloc(mrb, sizeof(struct mrb_vec3));
 
 	if (n == 1)
@@ -136,6 +165,7 @@ void init_mrb_vec3(mrb_state* mrb)
 	mrb_define_method(mrb, vector3Class, "z=", mrb_vec3_set_z, ARGS_REQ(1));
 
 	mrb_define_method(mrb, vector3Class, "+", mrb_vec3_plus, ARGS_REQ(1));
+	mrb_define_method(mrb, vector3Class, "*", mrb_vec3_times, ARGS_REQ(1));
 
 	mrb_define_method(mrb, vector3Class, "initialize", mrb_vec3_initialize, ARGS_ANY());
 }
