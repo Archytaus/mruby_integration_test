@@ -2,6 +2,21 @@ assert 'default constructor' do
 	Vec3.new(1) != nil
 end
 
+assert 'constructor setting empty value' do
+	value = Vec3.new
+	value.x == 0 && value.y == 0 && value.z == 0
+end
+
+assert 'constructor setting single value' do
+	value = Vec3.new(1)
+	value.x == 1 && value.y == 1 && value.z == 1
+end
+
+assert 'constructor setting values' do
+	value = Vec3.new(1, 2, 3)
+	value.x == 1 && value.y == 2 && value.z == 3
+end
+
 assert 'get x property' do
 	vec = Vec3.new(5)
 	vec.x == 5
@@ -41,7 +56,12 @@ assert 'addition' do
 end
 
 assert 'multiplication' do
-	value = Vec3.new(1) * Vec3.new(3, 3, 3)
+	value = Vec3.new(1) * Vec3.new(3)
+	value.x == 3 && value.y == 3 && value.z == 3
+end
+
+assert 'float multiplication' do
+	value = Vec3.new(1) * 3
 	value.x == 3 && value.y == 3 && value.z == 3
 end
 
@@ -54,4 +74,22 @@ end
 assert 'subtraction' do
 	value = Vec3.new(3) - Vec3.new(2)
 	value.x == 1 && value.y == 1 && value.z == 1
+end
+
+assert 'division' do
+	value = Vec3.new(4) / Vec3.new(2)
+	value.x == 2 && value.y == 2 && value.z == 2
+end
+
+assert 'float division' do
+	value = Vec3.new(4) / 2
+	value.x == 2 && value.y == 2 && value.z == 2
+end
+
+assert 'equality' do
+	Vec3.new(1, 2, 3) == Vec3.new(1, 2, 3)
+end
+
+assert 'inequality' do
+	Vec3.new(1, 2, 4) != Vec3.new(1, 2, 3)
 end
