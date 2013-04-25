@@ -91,6 +91,22 @@ mrb_value mrb_vec3_plus(mrb_state* mrb, mrb_value self)
 		selfValue->vector->z + arg->vector->z)));
 }
 
+mrb_value mrb_vec3_subtract(mrb_state* mrb, mrb_value self)
+{
+	mrb_value new_value;
+	int args = mrb_get_args(mrb, "o", &new_value);
+	mrb_vec3* arg =(struct mrb_vec3*)mrb_data_get_ptr(mrb, new_value, &mrb_vec3_type);
+	mrb_vec3* selfValue = (struct mrb_vec3*)mrb_data_get_ptr(mrb, self, &mrb_vec3_type);
+
+	if (!arg) return mrb_nil_value();
+
+	return mrb_vec3_wrap(mrb, mrb_class_get(mrb, "Vec3"), new mrb_vec3(
+		glm::vec3(
+			selfValue->vector->x - arg->vector->x, 
+			selfValue->vector->y - arg->vector->y,
+			selfValue->vector->z - arg->vector->z)));
+}
+
 mrb_value mrb_vec3_times(mrb_state* mrb, mrb_value self)
 {
 	mrb_vec3* selfValue = (struct mrb_vec3*)mrb_data_get_ptr(mrb, self, &mrb_vec3_type);
@@ -165,6 +181,7 @@ void init_mrb_vec3(mrb_state* mrb)
 	mrb_define_method(mrb, vector3Class, "z=", mrb_vec3_set_z, ARGS_REQ(1));
 
 	mrb_define_method(mrb, vector3Class, "+", mrb_vec3_plus, ARGS_REQ(1));
+	mrb_define_method(mrb, vector3Class, "-", mrb_vec3_subtract, ARGS_REQ(1));
 	mrb_define_method(mrb, vector3Class, "*", mrb_vec3_times, ARGS_REQ(1));
 
 	mrb_define_method(mrb, vector3Class, "initialize", mrb_vec3_initialize, ARGS_ANY());
