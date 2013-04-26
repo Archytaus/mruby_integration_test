@@ -93,3 +93,23 @@ end
 assert 'inequality' do
 	Vec3.new(1, 2, 4) != Vec3.new(1, 2, 3)
 end
+
+assert 'normalize' do
+	value = Vec3.new(0, 5, 0).normalize
+	value.x == 0 && value.y == 1 && value.z == 0
+end
+
+assert 'length' do
+	value = Vec3.new(0, 3, 0).length
+	value == 3
+end
+
+assert 'distance' do
+	value = Vec3.new(3).distance_to(Vec3.new(3, 3, 6))
+	value == 3
+end
+
+assert 'dot' do
+	value = Vec3.new(3).dot(Vec3.new(3, 4, 3))
+	value == 30
+end
