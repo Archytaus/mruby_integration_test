@@ -24,7 +24,7 @@ ScriptManager::ScriptManager(Game* game)
 	init_mrb_transform(mrb);
 	init_mrb_scene(mrb);
 	init_mrb_camera(mrb);
-	new ScriptInput(mrb);
+	new ScriptInput(mrb, game);
 
 	FILE* pFile;
 	auto libs = listFilesInDirectory("Assets/Scripts/*.rb");

@@ -1,6 +1,8 @@
 #include "ScriptInput.h"
 #include "mrb_vec2.h"
 
+ScriptInput* ScriptInput::_instance = nullptr;
+
 sf::Keyboard::Key ScriptInput::convert_sym_to_key(mrb_state* mrb, mrb_sym symbol)
 {
 	if (symbol == mrb_intern(mrb, "w"))
@@ -29,14 +31,15 @@ mrb_value ScriptInput::mrb_input_pressed(mrb_state* mrb, mrb_value self)
 mrb_value ScriptInput::mrb_input_mouse_pos(mrb_state* mrb, mrb_value self)
 {
 	auto vec2Class = mrb_class_get(mrb, "Vec2");
-	auto position = sf::Mouse::getPosition();
+	auto position = sf::Mouse::getPosition(*_instance->_game->window);
 	return mrb_vec2_wrap(mrb, vec2Class, new mrb_vec2(glm::vec2(position.x, position.y)));
 }
 
-// typedef mrb_value (*mrb_func_t)(mrb_state *mrb, mrb_value);
-
-ScriptInput::ScriptInput(mrb_state* mrb)
+ScriptInput::ScriptInput(mrb_state* mrb, Game* game)
+	: _game(game)
 {
+	_instance = this;
+
 	auto inputClass = mrb_define_class(mrb, "Input", mrb->object_class);
 	
 	mrb_define_class_method(mrb, inputClass, "pressed?", (&ScriptInput::mrb_input_pressed), ARGS_REQ(1));

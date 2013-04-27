@@ -13,13 +13,14 @@
 class Game
 {
 protected:
-	sf::Window* window;
 	sf::Clock* clock;
 	bool running;
 
 	System<TransformComponent> transformComponents;
 
 public:	
+	sf::Window* window;
+
 	class RenderManager* renderManager;
 	class ScreenManager* screenManager;
 	class ScriptManager* scriptManager;
