@@ -97,6 +97,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClCompile Include="mrb_input.cpp" />
     <ClCompile Include="mrb_scene.cpp" />
     <ClCompile Include="mrb_transform.cpp" />
+    <ClCompile Include="mrb_vec2.cpp" />
     <ClCompile Include="mrb_vec3.cpp" />
     <ClCompile Include="RenderComponent.cpp" />
     <ClCompile Include="RenderManager.cpp" />
@@ -126,6 +127,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClInclude Include="mrb_input.h" />
     <ClInclude Include="mrb_scene.h" />
     <ClInclude Include="mrb_transform.h" />
+    <ClInclude Include="mrb_vec2.h" />
     <ClInclude Include="mrb_vec3.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderManager.h" />

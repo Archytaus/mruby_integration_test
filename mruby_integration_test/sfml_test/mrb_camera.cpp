@@ -5,6 +5,7 @@
 #include <mruby/variable.h>
 #include <mruby/data.h>
 
+#include "mrb_vec2.h"
 #include "mrb_vec3.h"
 
 struct mrb_data_type mrb_camera_type = { "Camera", mrb_camera_free };
@@ -38,6 +39,21 @@ mrb_value mrb_camera_move(mrb_state* mrb, mrb_value self)
 	return mrb_nil_value();
 }
 
+mrb_value mrb_camera_rotate(mrb_state* mrb, mrb_value self)
+{
+	mrb_value new_value;
+	mrb_get_args(mrb, "o", &new_value);
+	mrb_vec2* arg = mrb_vec2_get_ptr(mrb, new_value);
+
+	if(!arg)
+		return mrb_nil_value();
+
+	struct mrb_camera *camera = (struct mrb_camera*)mrb_data_get_ptr(mrb, self, &mrb_camera_type);
+	camera->camera->offsetOrientation(arg->vector->y, arg->vector->x);
+
+	return mrb_nil_value();
+}
+
 void init_mrb_camera(mrb_state* mrb)	
 {
 	auto cameraClass = mrb_define_class(mrb, "Camera", mrb->object_class);
@@ -47,6 +63,7 @@ void init_mrb_camera(mrb_state* mrb)
 	mrb_define_method(mrb, cameraClass, "right", mrb_camera_get_right, ARGS_NONE());
 
 	mrb_define_method(mrb, cameraClass, "move", mrb_camera_move, ARGS_REQ(1));
+	mrb_define_method(mrb, cameraClass, "rotate", mrb_camera_rotate, ARGS_REQ(1));
 }
 
 void mrb_camera_free(mrb_state *mrb, void *p)

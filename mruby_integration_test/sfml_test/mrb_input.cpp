@@ -1,4 +1,5 @@
 #include "mrb_input.h"
+#include "mrb_vec2.h"
 
 sf::Keyboard::Key convert_sym_to_key(mrb_state* mrb, mrb_sym symbol)
 {
@@ -25,9 +26,18 @@ mrb_value mrb_input_pressed(mrb_state* mrb, mrb_value self)
 	return mrb_bool_value(sf::Keyboard::isKeyPressed(convert_sym_to_key(mrb, query_pressed)));
 }
 
+mrb_value mrb_input_mouse_pos(mrb_state* mrb, mrb_value self)
+{
+	auto vec2Class = mrb_class_get(mrb, "Vec2");
+	auto position = sf::Mouse::getPosition();
+	return mrb_vec2_wrap(mrb, vec2Class, new mrb_vec2(glm::vec2(position.x, position.y)));
+}
+
 void init_mrb_input(mrb_state* mrb)
 {
 	auto inputClass = mrb_define_class(mrb, "Input", mrb->object_class);
 
 	mrb_define_class_method(mrb, inputClass, "pressed?", mrb_input_pressed, ARGS_REQ(1));
+	mrb_define_class_method(mrb, inputClass, "mouse_pos", mrb_input_mouse_pos, ARGS_NONE());
+
 }

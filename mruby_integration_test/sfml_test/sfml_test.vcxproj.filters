@@ -75,6 +75,9 @@
     <ClCompile Include="mrb_input.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mrb_vec2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Dependencies\sfml-window-2.dll">
@@ -158,6 +161,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="mrb_input.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mrb_vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

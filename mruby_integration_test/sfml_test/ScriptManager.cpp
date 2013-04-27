@@ -5,6 +5,7 @@
 #include <mruby\compile.h>
 #include <mruby\data.h>
 
+#include "mrb_vec2.h"
 #include "mrb_vec3.h"
 #include "mrb_transform.h"
 #include "mrb_scene.h"
@@ -18,6 +19,7 @@ ScriptManager::ScriptManager(Game* game)
 {
 	mrb = mrb_open();
 
+	init_mrb_vec2(mrb);
 	init_mrb_vec3(mrb);
 	init_mrb_transform(mrb);
 	init_mrb_scene(mrb);

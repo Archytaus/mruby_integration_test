@@ -1,10 +1,8 @@
 class MyCamera
   MOVE_SPEED = 10
+  MOUSE_SENSITIVITY = 0.1
 
   def onCreate
-    puts "Instance variables: #{self.instance_variables}"
-    puts "Inspect: #{self.inspect}"
-    puts "Inspect: #{self.public_methods}"
     # @camera.position = Vec3.new(0, 0, 4)
   end
 
@@ -16,5 +14,7 @@ class MyCamera
 
     @camera.move(Vec3.new(move_offset) * @camera.right) if Input.pressed? :d
     @camera.move(Vec3.new(move_offset) * -@camera.right) if Input.pressed? :a
+
+    @camera.rotate(Input.mouse_pos * Vec2.new(MOUSE_SENSITIVITY))
   end
 end

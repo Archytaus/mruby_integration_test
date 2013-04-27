@@ -8,7 +8,7 @@ Game::Game(void)
 {
 	window = new sf::Window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
 	window->setVerticalSyncEnabled(true);
-
+	
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
