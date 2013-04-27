@@ -1,7 +1,7 @@
-#include "mrb_input.h"
+#include "ScriptInput.h"
 #include "mrb_vec2.h"
 
-sf::Keyboard::Key convert_sym_to_key(mrb_state* mrb, mrb_sym symbol)
+sf::Keyboard::Key ScriptInput::convert_sym_to_key(mrb_state* mrb, mrb_sym symbol)
 {
 	if (symbol == mrb_intern(mrb, "w"))
 		return sf::Keyboard::W;
@@ -18,7 +18,7 @@ sf::Keyboard::Key convert_sym_to_key(mrb_state* mrb, mrb_sym symbol)
 	return sf::Keyboard::Key::Unknown;
 }
 
-mrb_value mrb_input_pressed(mrb_state* mrb, mrb_value self)
+mrb_value ScriptInput::mrb_input_pressed(mrb_state* mrb, mrb_value self)
 {
 	mrb_sym query_pressed;
 	mrb_get_args(mrb, "n", &query_pressed);
@@ -26,18 +26,19 @@ mrb_value mrb_input_pressed(mrb_state* mrb, mrb_value self)
 	return mrb_bool_value(sf::Keyboard::isKeyPressed(convert_sym_to_key(mrb, query_pressed)));
 }
 
-mrb_value mrb_input_mouse_pos(mrb_state* mrb, mrb_value self)
+mrb_value ScriptInput::mrb_input_mouse_pos(mrb_state* mrb, mrb_value self)
 {
 	auto vec2Class = mrb_class_get(mrb, "Vec2");
 	auto position = sf::Mouse::getPosition();
 	return mrb_vec2_wrap(mrb, vec2Class, new mrb_vec2(glm::vec2(position.x, position.y)));
 }
 
-void init_mrb_input(mrb_state* mrb)
+// typedef mrb_value (*mrb_func_t)(mrb_state *mrb, mrb_value);
+
+ScriptInput::ScriptInput(mrb_state* mrb)
 {
 	auto inputClass = mrb_define_class(mrb, "Input", mrb->object_class);
-
-	mrb_define_class_method(mrb, inputClass, "pressed?", mrb_input_pressed, ARGS_REQ(1));
-	mrb_define_class_method(mrb, inputClass, "mouse_pos", mrb_input_mouse_pos, ARGS_NONE());
-
+	
+	mrb_define_class_method(mrb, inputClass, "pressed?", (&ScriptInput::mrb_input_pressed), ARGS_REQ(1));
+	mrb_define_class_method(mrb, inputClass, "mouse_pos", (&ScriptInput::mrb_input_mouse_pos), ARGS_NONE());
 }

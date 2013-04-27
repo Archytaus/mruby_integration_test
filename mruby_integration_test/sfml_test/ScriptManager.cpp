@@ -10,7 +10,7 @@
 #include "mrb_transform.h"
 #include "mrb_scene.h"
 #include "mrb_camera.h"
-#include "mrb_input.h"
+#include "ScriptInput.h"
 
 #include "FolderHelper.h"
 
@@ -24,7 +24,7 @@ ScriptManager::ScriptManager(Game* game)
 	init_mrb_transform(mrb);
 	init_mrb_scene(mrb);
 	init_mrb_camera(mrb);
-	init_mrb_input(mrb);
+	new ScriptInput(mrb);
 
 	FILE* pFile;
 	auto libs = listFilesInDirectory("Assets/Scripts/*.rb");

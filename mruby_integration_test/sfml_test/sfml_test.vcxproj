@@ -94,7 +94,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mrb_camera.cpp" />
-    <ClCompile Include="mrb_input.cpp" />
+    <ClCompile Include="ScriptInput.cpp" />
     <ClCompile Include="mrb_scene.cpp" />
     <ClCompile Include="mrb_transform.cpp" />
     <ClCompile Include="mrb_vec2.cpp" />
@@ -124,7 +124,7 @@ xcopy "$(ProjectDir)Assets" "$(TargetDir)Assets\" /Y /E</Command>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="mrb_camera.h" />
-    <ClInclude Include="mrb_input.h" />
+    <ClInclude Include="ScriptInput.h" />
     <ClInclude Include="mrb_scene.h" />
     <ClInclude Include="mrb_transform.h" />
     <ClInclude Include="mrb_vec2.h" />

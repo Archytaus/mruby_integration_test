@@ -72,10 +72,10 @@
     <ClCompile Include="mrb_camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mrb_input.cpp">
+    <ClCompile Include="mrb_vec2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="mrb_vec2.cpp">
+    <ClCompile Include="ScriptInput.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -160,10 +160,10 @@
     <ClInclude Include="FolderHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mrb_input.h">
+    <ClInclude Include="mrb_vec2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mrb_vec2.h">
+    <ClInclude Include="ScriptInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
