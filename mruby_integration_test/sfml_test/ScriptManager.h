@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "ScriptComponent.h"
+#include "Game.h"
 
 #include <mruby.h>
 #include <mruby\compile.h>
@@ -13,15 +14,16 @@ class ScriptManager
 protected:
 	mrb_state* mrb;	
 	struct RClass *scriptComponentClass;
+	class Game* game;
 
 public:
 	System<class ScriptComponent> scriptComponents;
 
-	ScriptManager(void);
+	ScriptManager(class Game* game);
 	~ScriptManager(void);
 
 	void update(sf::Time elapsed);
 	
-	class ScriptComponent* createScriptComponent(EntityId id, class TransformComponent* transformComponent, std::string className);
+	class ScriptComponent* createScriptComponent(EntityId id, std::string className);
 };
 

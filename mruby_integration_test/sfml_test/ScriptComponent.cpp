@@ -1,14 +1,10 @@
 #include "ScriptComponent.h"
 
-ScriptComponent::ScriptComponent(EntityId id, class TransformComponent* transformComponent, std::string scriptClass, mrb_state* mrb) 
+ScriptComponent::ScriptComponent(EntityId id, std::string scriptClass, mrb_state* mrb) 
 	: Component(id), mrb(mrb)
 {
 	_scriptInstance = mrb_class_new_instance(mrb, 0, ARGS_NONE(), mrb_class_get(mrb, scriptClass.c_str()));
 	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@id"), mrb_fixnum_value(id)); 
-
-	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@transform"), transformComponent->init_mrb_variables(mrb)); 
-	
-	onCreate();
 }
 
 ScriptComponent::~ScriptComponent()
@@ -61,4 +57,24 @@ void ScriptComponent::onUpdate(sf::Time elapsed)
 	}
 
 	mrb_gc_arena_restore(mrb, ai);
+}
+
+ScriptComponent* ScriptComponent::withTransformComponent(class TransformComponent* transformComponent)
+{
+	if(transformComponent)
+	{
+		mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@transform"), transformComponent->init_mrb_variables(mrb)); 
+	}
+
+	return this;
+}
+
+ScriptComponent* ScriptComponent::withCameraComponent(Camera* camera)
+{
+	if(camera)
+	{
+		mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@camera"), camera->init_mrb_variables(mrb)); 
+	}
+
+	return this;
 }

@@ -53,7 +53,7 @@ void mrb_camera_free(mrb_state *mrb, void *p)
 {
 }
 
-mrb_value mrb_camera_wrap(mrb_state *mrb, struct RClass *tc, struct mrb_camera *tm)
+mrb_value mrb_camera_wrap(mrb_state *mrb, struct RClass *tc, struct mrb_camera *camera)
 {
-	return mrb_obj_value(Data_Wrap_Struct(mrb, tc, &mrb_camera_type, tm));
+	return mrb_obj_value(Data_Wrap_Struct(mrb, tc, &mrb_camera_type, camera));
 }

@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include "mrb_camera.h"
 
 static const float MaxVerticalAngle = 85.0f; //must be less than 90 to avoid gimbal lock
 
@@ -101,4 +102,11 @@ glm::mat4 Camera::projection() const {
 
 glm::mat4 Camera::view() const {
     return orientation() * glm::translate(glm::mat4(), -_position);
+}
+
+mrb_value Camera::init_mrb_variables(mrb_state* mrb)
+{
+	auto cameraInstance = mrb_camera_wrap(mrb, mrb_class_get(mrb, "Camera"), new mrb_camera(this));
+
+	return cameraInstance;
 }

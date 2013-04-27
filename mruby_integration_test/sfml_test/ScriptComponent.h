@@ -7,6 +7,7 @@
 #include <mruby/proc.h>
 #include <mruby\variable.h>
 
+#include "Camera.h"
 #include "mrb_vec3.h"
 
 class ScriptComponent 
@@ -17,11 +18,13 @@ protected:
 	mrb_value _scriptInstance;
 
 public:
-	ScriptComponent(EntityId id, class TransformComponent* transformComponent, 
-		std::string scriptClass, mrb_state* mrb);
+	ScriptComponent(EntityId id, std::string scriptClass, mrb_state* mrb);
 	~ScriptComponent();
 	
 	void onCreate();
 	void onDestroy();
 	void onUpdate(sf::Time elapsed);
+
+	ScriptComponent* withTransformComponent(class TransformComponent* transformComponent);
+	ScriptComponent* withCameraComponent(class Camera* camera);
 };

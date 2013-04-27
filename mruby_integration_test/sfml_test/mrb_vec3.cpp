@@ -123,6 +123,19 @@ mrb_value mrb_vec3_subtract(mrb_state* mrb, mrb_value self)
 		selfValue->vector->z - arg->vector->z)));
 }
 
+mrb_value mrb_vec3_usubtract(mrb_state* mrb, mrb_value self)
+{
+	mrb_vec3* selfValue = (struct mrb_vec3*)mrb_data_get_ptr(mrb, self, &mrb_vec3_type);
+
+	if (!selfValue) return mrb_nil_value();
+
+	return mrb_vec3_wrap(mrb, mrb_class_get(mrb, "Vec3"), new mrb_vec3(
+		glm::vec3(
+			0 - selfValue->vector->x, 
+			0 - selfValue->vector->y,
+			0 - selfValue->vector->z)));
+}
+
 mrb_value mrb_vec3_times(mrb_state* mrb, mrb_value self)
 {
 	mrb_vec3* selfValue = (struct mrb_vec3*)mrb_data_get_ptr(mrb, self, &mrb_vec3_type);
@@ -283,6 +296,7 @@ void init_mrb_vec3(mrb_state* mrb)
 
 	mrb_define_method(mrb, vector3Class, "+", mrb_vec3_plus, ARGS_REQ(1));
 	mrb_define_method(mrb, vector3Class, "-", mrb_vec3_subtract, ARGS_REQ(1));
+	mrb_define_method(mrb, vector3Class, "-@", mrb_vec3_usubtract, ARGS_NONE());
 	mrb_define_method(mrb, vector3Class, "*", mrb_vec3_times, ARGS_REQ(1));
 	mrb_define_method(mrb, vector3Class, "/", mrb_vec3_divide, ARGS_REQ(1));
 

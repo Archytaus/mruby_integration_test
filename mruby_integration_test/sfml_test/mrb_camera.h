@@ -25,4 +25,4 @@ public:
 
 void init_mrb_camera(mrb_state* mrb);
 void mrb_camera_free(mrb_state *mrb, void *p);
-mrb_value mrb_camera_wrap(mrb_state *mrb, struct RClass *tc, struct mrb_transform *tm);
+mrb_value mrb_camera_wrap(mrb_state *mrb, struct RClass *tc, struct mrb_camera *camera);

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm\glm.hpp>
+#include <mruby.h>
 
 class Camera
 {
@@ -52,6 +53,8 @@ public:
 	transformation.
 	*/
 	glm::mat4 view() const;
+
+	mrb_value init_mrb_variables(mrb_state* mrb);
 
 private:
 	glm::vec3 _position;

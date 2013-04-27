@@ -8,7 +8,7 @@ Game::Game(void)
 {
 	window = new sf::Window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
 	window->setVerticalSyncEnabled(true);
-
+	
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
@@ -25,17 +25,20 @@ Game::Game(void)
 	
 	renderManager = new RenderManager(this);
 	screenManager = new ScreenManager(this);
-	scriptManager = new ScriptManager();
+	scriptManager = new ScriptManager(this);
 
 	auto entity = new Entity(0);
 	auto positionComponent = transformComponents.components[0] = new TransformComponent(0);
 
 	entity->addComponent(transformComponents.components[0]);
-	entity->addComponent(scriptManager->createScriptComponent(0, positionComponent, "Test"));
+	entity->addComponent(scriptManager->createScriptComponent(0, "Test")->withTransformComponent(positionComponent));
 
 	auto renderComponent = renderManager->createRenderComponent(0, positionComponent);
 	entity->addComponent(renderComponent);
 	renderComponent->load();
+
+	auto cameraEntity = new Entity(1);
+	cameraEntity->addComponent(scriptManager->createScriptComponent(1, "MyCamera")->withCameraComponent(renderManager->camera));
 }
 
 Game::~Game(void)

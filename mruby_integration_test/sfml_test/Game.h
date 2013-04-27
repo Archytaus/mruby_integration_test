@@ -17,13 +17,13 @@ protected:
 	sf::Clock* clock;
 	bool running;
 
+	System<TransformComponent> transformComponents;
+
+public:	
 	class RenderManager* renderManager;
 	class ScreenManager* screenManager;
 	class ScriptManager* scriptManager;
 
-	System<TransformComponent> transformComponents;
-
-public:
 	Game(void);
 	~Game(void);
 

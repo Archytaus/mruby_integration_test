@@ -8,16 +8,21 @@
 #include "mrb_vec3.h"
 #include "mrb_transform.h"
 #include "mrb_scene.h"
+#include "mrb_camera.h"
+#include "mrb_input.h"
 
 #include "FolderHelper.h"
 
-ScriptManager::ScriptManager(void)
+ScriptManager::ScriptManager(Game* game)
+	: game(game)
 {
 	mrb = mrb_open();
 
 	init_mrb_vec3(mrb);
 	init_mrb_transform(mrb);
 	init_mrb_scene(mrb);
+	init_mrb_camera(mrb);
+	init_mrb_input(mrb);
 
 	FILE* pFile;
 	auto libs = listFilesInDirectory("Assets/Scripts/*.rb");
@@ -75,7 +80,7 @@ void ScriptManager::update(sf::Time elapsed)
 	}
 }
 
-ScriptComponent* ScriptManager::createScriptComponent(EntityId id, class TransformComponent* transformComponent, std::string scriptClass)
+ScriptComponent* ScriptManager::createScriptComponent(EntityId id, std::string scriptClass)
 {
-	return scriptComponents.components[id] = new ScriptComponent(id, transformComponent, scriptClass, mrb);
+	return scriptComponents.components[id] = new ScriptComponent(id, scriptClass, mrb);
 }
