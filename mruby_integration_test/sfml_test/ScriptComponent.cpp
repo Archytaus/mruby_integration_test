@@ -5,6 +5,8 @@ ScriptComponent::ScriptComponent(EntityId id, std::string scriptClass, mrb_state
 {
 	_scriptInstance = mrb_class_new_instance(mrb, 0, ARGS_NONE(), mrb_class_get(mrb, scriptClass.c_str()));
 	mrb_iv_set(mrb, _scriptInstance, mrb_intern_cstr(mrb, "@id"), mrb_fixnum_value(id)); 
+
+	onCreate();
 }
 
 ScriptComponent::~ScriptComponent()

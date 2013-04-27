@@ -3,7 +3,7 @@ class MyCamera
   MOUSE_SENSITIVITY = 0.1
 
   def onCreate
-    # @camera.position = Vec3.new(0, 0, 4)
+    @last_mouse = Vec2.new
   end
 
   def update(elapsed)
@@ -15,6 +15,8 @@ class MyCamera
     @camera.move(Vec3.new(move_offset) * @camera.right) if Input.pressed? :d
     @camera.move(Vec3.new(move_offset) * -@camera.right) if Input.pressed? :a
 
-    @camera.rotate(Input.mouse_pos * Vec2.new(MOUSE_SENSITIVITY))
+    mouse_pos = Input.mouse_pos
+    @camera.rotate((mouse_pos - @last_mouse) * Vec2.new(MOUSE_SENSITIVITY))
+    @last_mouse = mouse_pos
   end
 end
