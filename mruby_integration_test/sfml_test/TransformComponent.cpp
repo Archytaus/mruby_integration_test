@@ -7,13 +7,14 @@ TransformComponent::TransformComponent(EntityId id)
 glm::mat4 TransformComponent::world()
 {
 	glm::mat4 world;
-	world *= glm::scale(glm::mat4(), scale);
+	
+	world *= glm::translate(glm::mat4(), position);
 
 	world *= glm::rotate(glm::mat4(), rotation.x, glm::vec3(1, 0, 0));
 	world *= glm::rotate(glm::mat4(), rotation.y, glm::vec3(0, 1, 0));
 	world *= glm::rotate(glm::mat4(), rotation.z, glm::vec3(0, 0, 1));
 
-	world *= glm::translate(glm::mat4(), position);
+	world *= glm::scale(glm::mat4(), scale);
 
 	return world;
 }

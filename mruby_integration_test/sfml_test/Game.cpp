@@ -8,7 +8,7 @@ Game::Game(void)
 {
 	window = new sf::Window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
 	window->setVerticalSyncEnabled(true);
-	
+
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
@@ -22,23 +22,36 @@ Game::Game(void)
 	glDepthFunc(GL_LESS);
 
 	clock = new sf::Clock();
-	
+
 	renderManager = new RenderManager(this);
 	screenManager = new ScreenManager(this);
 	scriptManager = new ScriptManager(this);
 
-	auto entity = new Entity(0);
-	auto positionComponent = transformComponents.components[0] = new TransformComponent(0);
+	int i = 0;
+	for(int x = 0; x < 2; x++)
+	{
+		for(int y = 0; y < 3; y++)
+		{
+			auto entity = new Entity(i);
+			auto positionComponent = transformComponents.components[i] = new TransformComponent(i);
+			positionComponent->position.x = x * 4;
+			positionComponent->position.z = y * 4;
 
-	entity->addComponent(transformComponents.components[0]);
-	entity->addComponent(scriptManager->createScriptComponent(0, "Test")->withTransformComponent(positionComponent));
+			positionComponent->scale.y = 1 + (i % 2);
 
-	auto renderComponent = renderManager->createRenderComponent(0, positionComponent);
-	entity->addComponent(renderComponent);
-	renderComponent->load();
+			entity->addComponent(transformComponents.components[i]);
+			entity->addComponent(scriptManager->createScriptComponent(i, "Test")->withTransformComponent(positionComponent));
 
-	auto cameraEntity = new Entity(1);
-	cameraEntity->addComponent(scriptManager->createScriptComponent(1, "MyCamera")->withCameraComponent(renderManager->camera));
+			auto renderComponent = renderManager->createRenderComponent(i, positionComponent);
+			entity->addComponent(renderComponent);
+			renderComponent->load();
+
+			i++;
+		}
+	}
+
+	auto cameraEntity = new Entity(i + 1);
+	cameraEntity->addComponent(scriptManager->createScriptComponent(i + 1, "MyCamera")->withCameraComponent(renderManager->camera));
 }
 
 Game::~Game(void)
