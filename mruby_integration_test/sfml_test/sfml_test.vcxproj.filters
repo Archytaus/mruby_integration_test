@@ -166,5 +166,8 @@
     <ClInclude Include="ScriptInput.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptPart.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -24,7 +24,7 @@ ScriptManager::ScriptManager(Game* game)
 	init_mrb_transform(mrb);
 	init_mrb_scene(mrb);
 	init_mrb_camera(mrb);
-	new ScriptInput(mrb, game);
+	singletonComponents.push_back(new ScriptInput(mrb, game));
 
 	FILE* pFile;
 	auto libs = listFilesInDirectory("Assets/Scripts/*.rb");
@@ -79,6 +79,11 @@ void ScriptManager::update(sf::Time elapsed)
 	for(auto kvp : scriptComponents.components)
 	{
 		kvp.second->onUpdate(elapsed);
+	}
+
+	for(auto singleton : singletonComponents)
+	{
+		singleton->update(elapsed);
 	}
 }
 

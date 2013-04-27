@@ -4,6 +4,7 @@ class MyCamera
 
   def onCreate
     @last_mouse = Vec2.new
+    Input.lock_mouse
   end
 
   def update(elapsed)

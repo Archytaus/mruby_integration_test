@@ -3,6 +3,26 @@
 
 ScriptInput* ScriptInput::_instance = nullptr;
 
+void ScriptInput::setMouseLock(bool value)
+{
+	_mouseLock = value;
+}
+
+bool ScriptInput::getMouseLock()
+{
+	return _mouseLock;
+}
+
+void ScriptInput::update(sf::Time elapsed)
+{
+	if (_mouseLock)
+	{
+		auto screenCenter = _game->window->getSize();
+
+		sf::Mouse::setPosition(sf::Vector2i(screenCenter.x / 2.0f, screenCenter.y / 2.0f), *_game->window);
+	}
+}
+
 sf::Keyboard::Key ScriptInput::convert_sym_to_key(mrb_state* mrb, mrb_sym symbol)
 {
 	if (symbol == mrb_intern(mrb, "w"))
@@ -35,8 +55,22 @@ mrb_value ScriptInput::mrb_input_mouse_pos(mrb_state* mrb, mrb_value self)
 	return mrb_vec2_wrap(mrb, vec2Class, new mrb_vec2(glm::vec2(position.x, position.y)));
 }
 
+mrb_value ScriptInput::mrb_input_unlock_mouse(mrb_state* mrb, mrb_value self)
+{
+	_instance->setMouseLock(false);
+
+	return mrb_bool_value(_instance->getMouseLock());
+}
+
+mrb_value ScriptInput::mrb_input_lock_mouse(mrb_state* mrb, mrb_value self)
+{
+	_instance->setMouseLock(true);
+
+	return mrb_bool_value(_instance->getMouseLock());
+}
+
 ScriptInput::ScriptInput(mrb_state* mrb, Game* game)
-	: _game(game)
+	: _game(game), _mouseLock(false)
 {
 	_instance = this;
 
@@ -44,4 +78,7 @@ ScriptInput::ScriptInput(mrb_state* mrb, Game* game)
 	
 	mrb_define_class_method(mrb, inputClass, "pressed?", (&ScriptInput::mrb_input_pressed), ARGS_REQ(1));
 	mrb_define_class_method(mrb, inputClass, "mouse_pos", (&ScriptInput::mrb_input_mouse_pos), ARGS_NONE());
+
+	mrb_define_class_method(mrb, inputClass, "unlock_mouse", (&ScriptInput::mrb_input_unlock_mouse), ARGS_NONE());
+	mrb_define_class_method(mrb, inputClass, "lock_mouse", (&ScriptInput::mrb_input_lock_mouse), ARGS_NONE());
 }
