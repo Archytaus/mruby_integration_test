@@ -15,6 +15,7 @@ class Game
 protected:
 	sf::Clock* clock;
 	bool running;
+	bool _hasFocus;
 
 	System<TransformComponent> transformComponents;
 
@@ -30,5 +31,7 @@ public:
 
 	void run();
 	void shutdown();
+
+	bool hasFocus();
 };
 

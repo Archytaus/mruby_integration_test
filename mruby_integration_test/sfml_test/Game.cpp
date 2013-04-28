@@ -7,10 +7,11 @@
 #include "Entity.h"
 
 Game::Game(void)
+	: _hasFocus(true)
 {
 	window = new sf::Window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
 	window->setVerticalSyncEnabled(true);
-	
+
 	auto load_start = std::clock();
 
 	GLenum err = glewInit();
@@ -59,7 +60,7 @@ Game::Game(void)
 
 	auto load_end = std::clock();
 	auto elapsed = double(load_end - load_start);
-	printf_s("Load Time: %.2f ms", elapsed);
+	printf_s("Load Time: %.2f ms\n", elapsed);
 }
 
 Game::~Game(void)
@@ -77,14 +78,19 @@ void Game::run()
 		sf::Event event;
 		while (window->pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
 			{
+			case sf::Event::Closed:
 				shutdown();
-			}
-			else if (event.type == sf::Event::Resized)
-			{
+			case sf::Event::Resized:
 				// adjust the viewport when the window is resized
 				glViewport(0, 0, event.size.width, event.size.height);
+			case sf::Event::GainedFocus:
+				_hasFocus = true;
+				break;
+			case sf::Event::LostFocus:
+				_hasFocus = false;
+				break;
 			}
 		}
 
@@ -108,6 +114,11 @@ void Game::run()
 		// end the current frame (internally swaps the front and back buffers)
 		window->display();
 	}
+}
+
+bool Game::hasFocus()
+{
+	return _hasFocus;
 }
 
 void Game::shutdown()

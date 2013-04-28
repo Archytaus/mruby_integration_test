@@ -17,7 +17,7 @@ bool ScriptInput::getMouseLock()
 
 void ScriptInput::update(sf::Time elapsed)
 {
-	if (_mouseLock)
+	if (_mouseLock && _game->hasFocus())
 	{
 		auto screenSize = _game->window->getSize();
 		auto screenCenter = sf::Vector2i(screenSize.x / 2.0f, screenSize.y / 2.0f);
