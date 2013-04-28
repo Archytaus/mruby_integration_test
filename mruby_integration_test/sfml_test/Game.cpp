@@ -2,6 +2,8 @@
 
 #include <glew.h>
 #include <SFML/OpenGL.hpp>
+#include <ctime>
+
 #include "Entity.h"
 
 Game::Game(void)
@@ -9,6 +11,8 @@ Game::Game(void)
 	window = new sf::Window(sf::VideoMode(800, 600), "mruby Integration Test", sf::Style::Default, sf::ContextSettings(32));
 	window->setVerticalSyncEnabled(true);
 	
+	auto load_start = std::clock();
+
 	GLenum err = glewInit();
 	if (GLEW_OK != err)
 	{
@@ -28,7 +32,7 @@ Game::Game(void)
 	scriptManager = new ScriptManager(this);
 
 	int i = 0;
-	for(int x = 0; x < 2; x++)
+	for(int x = 0; x < 3; x++)
 	{
 		for(int y = 0; y < 3; y++)
 		{
@@ -52,6 +56,10 @@ Game::Game(void)
 
 	auto cameraEntity = new Entity(i + 1);
 	cameraEntity->addComponent(scriptManager->createScriptComponent(i + 1, "MyCamera")->withCameraComponent(renderManager->camera));
+
+	auto load_end = std::clock();
+	auto elapsed = double(load_end - load_start);
+	printf_s("Load Time: %.2f ms", elapsed);
 }
 
 Game::~Game(void)
