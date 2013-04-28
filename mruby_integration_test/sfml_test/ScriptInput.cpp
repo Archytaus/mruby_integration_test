@@ -6,6 +6,8 @@ ScriptInput* ScriptInput::_instance = nullptr;
 void ScriptInput::setMouseLock(bool value)
 {
 	_mouseLock = value;
+
+	this->_game->window->setMouseCursorVisible(!_mouseLock);
 }
 
 bool ScriptInput::getMouseLock()
@@ -17,9 +19,14 @@ void ScriptInput::update(sf::Time elapsed)
 {
 	if (_mouseLock)
 	{
-		auto screenCenter = _game->window->getSize();
+		auto screenSize = _game->window->getSize();
+		auto screenCenter = sf::Vector2i(screenSize.x / 2.0f, screenSize.y / 2.0f);
 
-		sf::Mouse::setPosition(sf::Vector2i(screenCenter.x / 2.0f, screenCenter.y / 2.0f), *_game->window);
+		auto mouseOffset = sf::Mouse::getPosition(*_game->window);
+
+		_delta = glm::vec2(mouseOffset.x - screenCenter.x, mouseOffset.y - screenCenter.y);
+
+		sf::Mouse::setPosition(screenCenter, *_game->window);
 	}
 }
 
@@ -55,6 +62,12 @@ mrb_value ScriptInput::mrb_input_mouse_pos(mrb_state* mrb, mrb_value self)
 	return mrb_vec2_wrap(mrb, vec2Class, new mrb_vec2(glm::vec2(position.x, position.y)));
 }
 
+mrb_value ScriptInput::mrb_input_mouse_delta(mrb_state* mrb, mrb_value self)
+{
+	auto vec2Class = mrb_class_get(mrb, "Vec2");
+	return mrb_vec2_wrap(mrb, vec2Class, new mrb_vec2(&_instance->_delta));
+}
+
 mrb_value ScriptInput::mrb_input_unlock_mouse(mrb_state* mrb, mrb_value self)
 {
 	_instance->setMouseLock(false);
@@ -70,14 +83,15 @@ mrb_value ScriptInput::mrb_input_lock_mouse(mrb_state* mrb, mrb_value self)
 }
 
 ScriptInput::ScriptInput(mrb_state* mrb, Game* game)
-	: _game(game), _mouseLock(false)
+	: _game(game), _mouseLock(false), _delta()
 {
 	_instance = this;
 
 	auto inputClass = mrb_define_class(mrb, "Input", mrb->object_class);
-	
+
 	mrb_define_class_method(mrb, inputClass, "pressed?", (&ScriptInput::mrb_input_pressed), ARGS_REQ(1));
 	mrb_define_class_method(mrb, inputClass, "mouse_pos", (&ScriptInput::mrb_input_mouse_pos), ARGS_NONE());
+	mrb_define_class_method(mrb, inputClass, "mouse_delta", (&ScriptInput::mrb_input_mouse_delta), ARGS_NONE());
 
 	mrb_define_class_method(mrb, inputClass, "unlock_mouse", (&ScriptInput::mrb_input_unlock_mouse), ARGS_NONE());
 	mrb_define_class_method(mrb, inputClass, "lock_mouse", (&ScriptInput::mrb_input_lock_mouse), ARGS_NONE());
